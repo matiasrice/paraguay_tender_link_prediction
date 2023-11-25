@@ -22,13 +22,13 @@ class GNN(torch.nn.Module):
 # Our final classifier applies the dot-product between source and destination
 # node embeddings to derive edge-level predictions:
 class Classifier(torch.nn.Module):
-    def forward(self, x_user: Tensor, x_movie: Tensor, edge_label_index: Tensor) -> Tensor:
+    def forward(self, x_inst: Tensor, x_supp: Tensor, edge_label_index: Tensor) -> Tensor:
         # Convert node embeddings to edge-level representations:
-        edge_feat_user = x_user[edge_label_index[0]]
-        edge_feat_movie = x_movie[edge_label_index[1]]
+        edge_feat_inst = x_inst[edge_label_index[0]]
+        edge_feat_supp = x_supp[edge_label_index[1]]
 
         # Apply dot-product to get a prediction per supervision edge:
-        prediction = (edge_feat_user * edge_feat_movie).sum(dim=-1)
+        prediction = (edge_feat_inst * edge_feat_supp).sum(dim=-1)
     
         prediction = torch.sigmoid(prediction)
 
@@ -37,15 +37,13 @@ class Classifier(torch.nn.Module):
 class Model(torch.nn.Module):
     def __init__(self, hidden_channels, num_heads, data, large_features):
         super().__init__()
-        # Since the dataset does not come with rich features, we also learn two
-        # embedding matrices for users and movies:
-        self.user_lin = torch.nn.Linear(25, hidden_channels)
+        self.inst_lin = torch.nn.Linear(25, hidden_channels)
         if not large_features:
-            self.movie_lin = torch.nn.Linear(25, hidden_channels)
+            self.supp_lin = torch.nn.Linear(25, hidden_channels)
         else:
-            self.movie_lin = torch.nn.Linear(34, hidden_channels)
-        self.user_emb = torch.nn.Embedding(data["institution"].num_nodes, hidden_channels)
-        self.movie_emb = torch.nn.Embedding(data["supplier"].num_nodes, hidden_channels)
+            self.supp_lin = torch.nn.Linear(34, hidden_channels)
+        self.inst_emb = torch.nn.Embedding(data["institution"].num_nodes, hidden_channels)
+        self.supp_emb = torch.nn.Embedding(data["supplier"].num_nodes, hidden_channels)
 
         # Instantiate heterogeneous GNN with GATConv
         self.gnn = GNN(hidden_channels, num_heads)
@@ -57,9 +55,8 @@ class Model(torch.nn.Module):
 
     def forward(self, data: HeteroData) -> Tensor:
         x_dict = {
-          #"institution": self.user_emb(data["institution"].node_id),
-          "institution": self.user_lin(data["institution"].x) + self.user_emb(data["institution"].node_id),
-          "supplier": self.movie_lin(data["supplier"].x) + self.movie_emb(data["supplier"].node_id),
+          "institution": self.inst_lin(data["institution"].x) + self.inst_emb(data["institution"].node_id),
+          "supplier": self.supp_lin(data["supplier"].x) + self.supp_emb(data["supplier"].node_id),
         } 
 
         # `x_dict` holds feature matrices of all node types
