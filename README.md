@@ -5,8 +5,14 @@ In many countries, the government stands as one of the largest entities engaging
 
 This approach can be conceptualized as a link prediction problem, where the goal is to forecast future or plausible links between a supplier and an institution. To operationalize this concept, we extract features from the public tender information in Paraguay and represent the supplier-institution relationship using a bipartite graph structure. We harness the capabilities of two contemporary models, GraphSAGE and GAT, to enhance the classification task. The experimental results demonstrate a high level of precision following the application of these methods.
 
-## Disclaimer
-This work was developed as a class project. The main goal of the project was not to structure the repo using all the best practices, but to get some results and generate a report, the repo is just aimed to make the code available. We realize that there is a lot room for improvement in the structure of the repo. However, because of the time-constraint, we will not focus on that right now. 
+## Directory Structure
+You can find the data wrangling and preprocess notebook in the [notebooks folder](./notebooks/). The final modeling notebook is located [data_modeling.ipynb](data_modeling.ipynb) file.
+
+If you want to run the whole pipeline, from data extraction to data modeling, you should go in the following order:
+
+1. [data_collection.ipynb](./notebooks/Data_collection.ipynb)
+2. [collected_data_wrangling.ipynb](./notebooks/Collected_data_wrangling.ipynb)
+3. [data_modeling.ipynb](./data_modeling.ipynb)
 
 ## Installation
 Our project requires specific packages to be installed. The `requirements.txt` file lists the Python dependencies required for this project. If you set up a new environment or if you want to ensure compatibility, you can use this file to install the correct versions of the necessary packages.
@@ -48,14 +54,8 @@ $pip install -r requirements.txt
 ```
 Your environment is now ready.
 
-## Directory Structure
-You can find the data wrangling and preprocess notebook in the [notebooks folder](./notebooks/). The final modeling notebook is located [data_modeling.ipynb](data_modeling.ipynb) file.
-
-If you want to run the whole pipeline, from data extraction to data modeling, you should go in the following order:
-
-1. [data_collection.ipynb](./notebooks/Data_collection.ipynb)
-2. [collected_data_wrangling.ipynb](./notebooks/Collected_data_wrangling.ipynb)
-3. [data_modeling.ipynb](./data_modeling.ipynb)
+## Disclaimer
+This work was developed as a class project. The main goal of the project was not to structure the repo using all the best practices, but to get some results and generate a report, the repo is just aimed to make the code available. We realize that there is a lot room for improvement in the structure of the repo. However, because of the time-constraint, we will not focus on that right now. 
 
 ## More details
 You can find the final summarized report [here](./report/).
