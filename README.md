@@ -6,7 +6,7 @@ In many countries, the government stands as one of the largest entities engaging
 This approach can be conceptualized as a link prediction problem, where the goal is to forecast future or plausible links between a supplier and an institution. To operationalize this concept, we extract features from the public tender information in Paraguay and represent the supplier-institution relationship using a bipartite graph structure. We harness the capabilities of two contemporary models, GraphSAGE and GAT, to enhance the classification task. The experimental results demonstrate a high level of precision following the application of these methods.
 
 ## Disclaimer
-This work was developed as a class project. The main goal of the project was not to structure the repo using all the best practices, but to make the code available. We realize that there is a lot room for improvement in the structure of the repo. However, because of the time-constraint, we will not focus on that. 
+This work was developed as a class project. The main goal of the project was not to structure the repo using all the best practices, but to get some results and generate a report, the repo is just make the code available. We realize that there is a lot room for improvement in the structure of the repo. However, because of the time-constraint, we will not focus on that right now. 
 
 ## More details
 You can find the final summarized report here.
